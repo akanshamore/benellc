@@ -1,79 +1,101 @@
-"use client";
-
+import { useState } from "react";
 import Image from "next/image";
-import { FaFile, FaFolder, FaImage } from "react-icons/fa";
 
-const DriveFiles = ({ files, productsThumbnails }) => {
-  const getFileIcon = (mimeType) => {
-    if (mimeType?.includes("folder")) {
-      return <FaFolder className="text-yellow-400 text-3xl" />;
-    }
-    if (mimeType?.includes("image")) {
-      return <FaImage className="text-green-400 text-3xl" />;
-    }
-    return <FaFile className="text-blue-400 text-3xl" />;
-  };
-
-  const renderFileContent = (file) => {
-    if (file.mimeType?.includes("folder")) {
-      // Find matching thumbnail by name (removing spaces and case sensitivity)
-      const thumbnail = productsThumbnails.find((thumb) => {
-        const thumbName = thumb.name.toLowerCase().replace(/\s+/g, "");
-        const fileName = file.name.toLowerCase().replace(/\s+/g, "");
-        return thumbName.includes(fileName) || fileName.includes(thumbName);
-      });
-
-      if (thumbnail?.thumbnailLink) {
-        const imageUrl = thumbnail.thumbnailLink;
-        return (
-          <Image
-            src={imageUrl}
-            alt={file.name}
-            width={300}
-            height={192}
-            className="w-full h-48 object-cover rounded-t-lg"
-            onError={(e) => console.log("Image failed to load:", e)}
-            style={{ objectFit: "cover" }}
-            priority={true}
-            quality={100}
+const FileIcon = ({ type }) => {
+  switch (type) {
+    case "pdf":
+      return (
+        <svg
+          className="w-8 h-8 text-red-500"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" />
+        </svg>
+      );
+    case "image":
+      return (
+        <svg
+          className="w-8 h-8 text-blue-500"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path
+            fillRule="evenodd"
+            d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
+            clipRule="evenodd"
           />
-        );
-      }
-    }
-    return getFileIcon(file.mimeType);
+        </svg>
+      );
+    default:
+      return (
+        <svg
+          className="w-8 h-8 text-gray-500"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
+          <path
+            fillRule="evenodd"
+            d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"
+            clipRule="evenodd"
+          />
+        </svg>
+      );
+  }
+};
+
+export default function DriveFiles({ files }) {
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const getFileType = (filename) => {
+    const extension = filename.split(".").pop().toLowerCase();
+    if (["jpg", "jpeg", "png", "gif"].includes(extension)) return "image";
+    if (extension === "pdf") return "pdf";
+    return "document";
   };
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {files.map((file) => (
           <div
-            key={file.id}
-            className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200"
+            key={file}
+            className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 p-4"
+            onClick={() => setSelectedFile(file)}
           >
-            <div className="p-4">
-              {renderFileContent(file)}
-              <div className="mt-4">
-                <h3 className="text-lg font-semibold text-gray-800 truncate">
-                  {file.name}
-                </h3>
-                <div className="mt-4 flex justify-end">
-                  <a
-                    href={file.webViewLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-600 hover:text-blue-800 text-sm font-medium"
-                  >
-                    Open
-                  </a>
-                </div>
+            <div className="flex items-center space-x-4">
+              <FileIcon type={getFileType(file)} />
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-gray-900 truncate">
+                  {file}
+                </p>
+                <p className="text-sm text-gray-500">
+                  {getFileType(file).toUpperCase()}
+                </p>
               </div>
             </div>
           </div>
         ))}
       </div>
+
+      {selectedFile && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg p-6 max-w-2xl w-full">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-medium">{selectedFile}</h3>
+              <button
+                onClick={() => setSelectedFile(null)}
+                className="text-gray-500 hover:text-gray-700"
+              >
+                Close
+              </button>
+            </div>
+            <div className="border-t pt-4">
+              <p>File preview will be displayed here</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
-};
-
-export default DriveFiles;
+}
