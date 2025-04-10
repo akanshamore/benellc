@@ -4,7 +4,10 @@ import { useState, useEffect } from "react";
 import { FolderIcon } from "@heroicons/react/24/solid";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
+import { useRouter } from "next/navigation";
+
 const FolderList = () => {
+  const router = useRouter();
   const [folders, setFolders] = useState([]);
   const [thumbnails, setThumbnails] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -58,6 +61,10 @@ const FolderList = () => {
       const comparison = a.name.localeCompare(b.name);
       return sortOrder === "asc" ? comparison : -comparison;
     });
+
+  const handleFolderClick = (folderName) => {
+    router.push(`/products/${encodeURIComponent(folderName)}`);
+  };
 
   // Pagination logic
   const totalPages = Math.ceil(filteredAndSortedFolders.length / itemsPerPage);
@@ -114,6 +121,7 @@ const FolderList = () => {
           return (
             <div
               key={folder.path}
+              onClick={() => handleFolderClick(folder.name)}
               className="group p-4 border border-gray-200 rounded-lg hover:shadow-lg transition-all duration-300 ease-in-out hover:border-blue-500 flex flex-col items-center justify-center cursor-pointer"
             >
               <div className="relative w-20 h-20 flex items-center justify-center mb-3">

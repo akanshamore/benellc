@@ -7,12 +7,28 @@ export async function GET(request) {
 
   try {
     const fileBuffer = await fs.readFile(path);
+    // const contentType = path.endsWith(".jpg")
+    //   ? "image/jpeg"
+    //   : path.endsWith(".png")
+    //   ? "image/png"
+    //   : path.endsWith(".avif")
+    //   ? "image/avif"
+    //   : "application/octet-stream";
+
     const contentType = path.endsWith(".jpg")
       ? "image/jpeg"
       : path.endsWith(".png")
       ? "image/png"
       : path.endsWith(".avif")
       ? "image/avif"
+      : path.endsWith(".mp4")
+      ? "video/mp4"
+      : path.endsWith(".mov")
+      ? "video/quicktime"
+      : path.endsWith(".webm")
+      ? "video/webm"
+      : path.endsWith(".avi")
+      ? "video/x-msvideo"
       : "application/octet-stream";
 
     return new NextResponse(fileBuffer, {
