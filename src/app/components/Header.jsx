@@ -122,7 +122,7 @@ const Header = () => {
             {/* FAQ */}
             <li>
               <Link
-                href="/FAQ"
+                href="/faqs"
                 className="py-6 text-white hover:text-green-300"
               >
                 FAQ

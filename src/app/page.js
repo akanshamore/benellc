@@ -9,7 +9,6 @@ import FolderList from "./components/FolderList";
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-white">
-      <Header />
       <FolderList />
 
       <footer className="mt-12 py-8">
