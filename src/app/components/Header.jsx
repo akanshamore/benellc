@@ -1,75 +1,56 @@
 import Link from "next/link";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 const Header = () => {
+  const [folders, setFolders] = useState([]);
+  const [filteredFolders, setFilteredFolders] = useState([]);
+
+  useEffect(() => {
+    setFilteredFolders(folders);
+  }, [folders]);
+
+  useEffect(() => {
+    const fetchFolders = async () => {
+      const response = await fetch("/api/get-remote-folders");
+      const data = await response.json();
+      setFolders(data);
+    };
+    fetchFolders();
+  }, []);
+
   return (
-    <div className="w-full bg-white shadow-md">
+    <div className="w-full bg-[#8A9BA4] shadow-md">
       <div className="max-w-[1440px] mx-auto px-4 flex items-center justify-between">
         {/* Logo Section */}
         <div className="py-4">
           <Link href="/">
             <Image
-              src="/logo.png"
+              src="/images/benesvg1.svg"
               alt="Company Logo"
-              width={180}
-              height={60}
+              width={40}
+              height={46}
               className="logo"
             />
           </Link>
         </div>
 
         {/* Navigation Section */}
-        <nav className="hidden lg:flex flex-1 justify-center">
+        <nav className="hidden lg:flex flex-1 justify-center text-white">
           <ul className="flex items-center space-x-12">
-            {/* About Us Dropdown */}
-            <li className="relative group">
-              <button className="flex items-center space-x-1 py-6 transition-colors duration-300 hover:text-gray-800">
-                <span>About Us</span>
-                <svg
-                  className="w-4 h-4 transition-transform duration-300 group-hover:rotate-180"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </button>
-              <ul className="absolute hidden group-hover:block w-48 bg-white shadow-lg py-2 rounded-md z-50">
-                <li>
-                  <Link
-                    href="/about"
-                    className="block px-4 py-2 hover:bg-gray-100"
-                  >
-                    Profile
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/mission"
-                    className="block px-4 py-2 hover:bg-gray-100"
-                  >
-                    Mission & Vision
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/values"
-                    className="block px-4 py-2 hover:bg-gray-100"
-                  >
-                    Values
-                  </Link>
-                </li>
-              </ul>
+            {/* About Us */}
+            <li>
+              <Link
+                href="/about-us"
+                className="py-6 text-white hover:text-green-300"
+              >
+                About Us
+              </Link>
             </li>
 
             {/* Products Dropdown */}
             <li className="relative group">
-              <button className="flex items-center space-x-1 py-6">
+              <button className="flex items-center space-x-1 py-6 text-white">
                 <span>Products</span>
                 <svg
                   className="w-4 h-4"
@@ -85,69 +66,67 @@ const Header = () => {
                   />
                 </svg>
               </button>
-              <ul className="absolute hidden group-hover:block w-48 bg-white shadow-lg py-2 rounded-md z-50">
-                <li>
-                  <Link
-                    href="/products/aluminum"
-                    className="block px-4 py-2 hover:bg-gray-100"
-                  >
-                    Aluminium Alloy
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/products/zinc"
-                    className="block px-4 py-2 hover:bg-gray-100"
-                  >
-                    Zinc Alloy
-                  </Link>
-                </li>
-              </ul>
+              <div className="absolute hidden group-hover:block w-64 bg-white shadow-lg rounded-md z-50">
+                {/* Search Section */}
+                <div className="p-3 border-b">
+                  <input
+                    type="text"
+                    placeholder="Search products..."
+                    className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-green-500"
+                    onChange={(e) => {
+                      const searchTerm = e.target.value.toLowerCase();
+                      const filtered = folders.filter((folder) =>
+                        folder.name.toLowerCase().includes(searchTerm)
+                      );
+                      setFilteredFolders(filtered);
+                    }}
+                  />
+                </div>
+
+                {/* Scrollable Products List */}
+                <ul className="max-h-[240px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+                  {filteredFolders.map((folder) => (
+                    <li key={folder.name}>
+                      <Link
+                        href={`/products/${folder.name.toLowerCase()}`}
+                        className="block px-4 py-2 hover:bg-gray-100 text-gray-800"
+                      >
+                        {folder.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </li>
 
-            {/* Our Customers */}
+            {/* Join our team */}
             <li>
-              <Link href="/our-customers" className="py-6 hover:text-green-600">
-                Our Customers
+              <Link
+                href="/join-our-team"
+                className="py-6 text-white hover:text-green-300"
+              >
+                Join our team
               </Link>
             </li>
 
-            {/* Contact Us */}
-            <li className="relative group">
-              <button className="flex items-center space-x-1 py-6">
-                <span>Contact Us</span>
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </button>
-              <ul className="absolute hidden group-hover:block w-48 bg-white shadow-lg py-2 rounded-md z-50">
-                <li>
-                  <Link
-                    href="/contact"
-                    className="block px-4 py-2 hover:bg-gray-100"
-                  >
-                    Get in Touch
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/careers"
-                    className="block px-4 py-2 hover:bg-gray-100"
-                  >
-                    Careers
-                  </Link>
-                </li>
-              </ul>
+            {/* Contact us */}
+            <li>
+              <Link
+                href="/contact-us"
+                className="py-6 text-white hover:text-green-300"
+              >
+                Contact us
+              </Link>
+            </li>
+
+            {/* FAQ */}
+            <li>
+              <Link
+                href="/FAQ"
+                className="py-6 text-white hover:text-green-300"
+              >
+                FAQ
+              </Link>
             </li>
           </ul>
         </nav>
@@ -158,7 +137,7 @@ const Header = () => {
         </button>
 
         {/* Mobile Menu Button */}
-        <button className="lg:hidden p-2">
+        <button className="lg:hidden p-2 text-white">
           <svg
             className="w-6 h-6"
             fill="none"
