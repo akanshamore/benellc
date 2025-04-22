@@ -1,0 +1,103 @@
+.container {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)), url('/images/pexels-joseph-russo-15340288.jpg');
+    min-height: 100vh;
+    width: 100%;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.heading {
+    font-size: 48px;
+    text-align: center;
+    padding-top: 120px;
+    padding-bottom: 40px;
+    color: white;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.subHeading {
+    font-size: 32px;
+    text-align: center;
+    padding-bottom: 30px;
+    color: #fe5e00;
+    font-weight: 600;
+}
+
+.paragraph {
+    font-size: 22px;
+    text-align: center;
+    padding: 30px 15% 50px;
+    color: white;
+    line-height: 1.6;
+    font-style: italic;
+}
+
+.button {
+    display: inline-block;
+    padding: 15px 35px;
+    border: none;
+    border-radius: 30px;
+    background: #fe5e00;
+    color: white;
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    margin: 20px auto;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(254, 94, 0, 0.3);
+}
+
+.button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(254, 94, 0, 0.4);
+    background: #ff7425;
+}
+
+.cards {
+    margin: 60px auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    padding: 0 5%;
+    max-width: 1400px;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 30px;
+    transition: transform 0.3s ease;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+.card h3 {
+    color: #fe5e00;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.card h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background: #fe5e00;
+}
+
+.card p {
+    color: #333;
+    line-height: 1.6;
+    font-size: 16px;
+}

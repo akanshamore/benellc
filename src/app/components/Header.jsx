@@ -48,6 +48,16 @@ const Header = () => {
               </Link>
             </li>
 
+            {/*know-more section*/}
+            <li>
+              <Link
+                href="/know-more"
+                className="py-6 text-white hover:text-green-300"
+              >
+                Know More
+              </Link>
+            </li>
+
             {/* Products Dropdown */}
             <li className="relative group">
               <button className="flex items-center space-x-1 py-6 text-white">
