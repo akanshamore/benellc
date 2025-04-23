@@ -1,0 +1,120 @@
+.main {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.heroSection {
+    text-align: center;
+    padding: 4rem 0;
+    background: linear-gradient(to right, #f8f9fa, #e9ecef);
+    border-radius: 12px;
+    margin-bottom: 3rem;
+}
+
+.heroSection h1 {
+    font-size: 3rem;
+    color: #2d3436;
+    margin-bottom: 1rem;
+}
+
+.heroSection p {
+    font-size: 1.2rem;
+    color: #636e72;
+}
+
+.faqContainer {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+}
+
+.faqNav {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid #f1f1f1;
+    padding-bottom: 1rem;
+}
+
+.faqNav button {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    background: none;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.activeTab {
+    color: #0984e3;
+    border-bottom: 2px solid #0984e3 !important;
+    font-weight: 600;
+}
+
+.faqItem {
+    border-bottom: 1px solid #eee;
+    padding: 1.5rem 0;
+}
+
+.faqItem h3 {
+    color: #2d3436;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.answer {
+    color: #636e72;
+    line-height: 1.6;
+}
+
+.answer ul {
+    padding-left: 1.5rem;
+}
+
+.contactSection {
+    text-align: center;
+    padding: 4rem 0;
+    margin-top: 3rem;
+}
+
+.contactSection h2 {
+    font-size: 2rem;
+    color: #2d3436;
+    margin-bottom: 1rem;
+}
+
+.contactButton {
+    margin-top: 1.5rem;
+    padding: 1rem 2rem;
+    background: #0984e3;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.contactButton:hover {
+    background: #0773c5;
+}
+
+@media (max-width: 768px) {
+    .main {
+        padding: 1rem;
+    }
+
+    .heroSection {
+        padding: 2rem 1rem;
+    }
+
+    .heroSection h1 {
+        font-size: 2rem;
+    }
+
+    .faqNav {
+        flex-direction: column;
+    }
+}
